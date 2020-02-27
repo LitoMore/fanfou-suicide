@@ -1,0 +1,91 @@
+{
+  "name": "fanfou-suicide",
+  "homepage": "https://litomore.github.io/fanfou-suicide",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
+    "async": "^3.1.1",
+    "fanfou-sdk-browser": "^0.6.0",
+    "file-saver": "^2.0.2",
+    "moment": "^2.24.0",
+    "nes.css": "^2.3.0",
+    "papaparse": "^5.1.1",
+    "query-string": "^6.11.0",
+    "react": "^16.12.0",
+    "react-countup": "^4.3.3",
+    "react-dom": "^16.12.0",
+    "react-popout": "^1.0.2",
+    "react-scripts": "3.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "xo",
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "xo": {
+    "parser": "babel-eslint",
+    "envs": [
+      "node",
+      "browser"
+    ],
+    "extends": [
+      "xo-react"
+    ],
+    "plugins": "react",
+    "ignores": [
+      "hooks/**",
+      "platforms/**",
+      "plugins/**",
+      "res/**",
+      "www/**"
+    ],
+    "rules": {
+      "import/no-unassigned-import": [
+        2,
+        {
+          "allow": [
+            "**/style/*.css",
+            "**/*.css",
+            "typeface-**"
+          ]
+        }
+      ],
+      "unicorn/no-abusive-eslint-disable": 0,
+      "eslint-comments/no-unused-disable": 0
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "16"
+    }
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint-config-xo": "^0.29.1",
+    "eslint-config-xo-react": "^0.23.0",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.4.0",
+    "gh-pages": "^2.2.0",
+    "xo": "^0.26.1"
+  }
+}
