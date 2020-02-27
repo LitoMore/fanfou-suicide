@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/fanfou-suicide/static/css/main.6afccd19.chunk.css",
+    "main.js": "/fanfou-suicide/static/js/main.1c10f52a.chunk.js",
+    "main.js.map": "/fanfou-suicide/static/js/main.1c10f52a.chunk.js.map",
+    "runtime-main.js": "/fanfou-suicide/static/js/runtime-main.d6b84207.js",
+    "runtime-main.js.map": "/fanfou-suicide/static/js/runtime-main.d6b84207.js.map",
+    "static/css/2.bc82e399.chunk.css": "/fanfou-suicide/static/css/2.bc82e399.chunk.css",
+    "static/js/2.cf56cc2f.chunk.js": "/fanfou-suicide/static/js/2.cf56cc2f.chunk.js",
+    "static/js/2.cf56cc2f.chunk.js.map": "/fanfou-suicide/static/js/2.cf56cc2f.chunk.js.map",
+    "index.html": "/fanfou-suicide/index.html",
+    "precache-manifest.a3a4d11ed56d90baddaa6767325587aa.js": "/fanfou-suicide/precache-manifest.a3a4d11ed56d90baddaa6767325587aa.js",
+    "service-worker.js": "/fanfou-suicide/service-worker.js",
+    "static/css/2.bc82e399.chunk.css.map": "/fanfou-suicide/static/css/2.bc82e399.chunk.css.map",
+    "static/css/main.6afccd19.chunk.css.map": "/fanfou-suicide/static/css/main.6afccd19.chunk.css.map",
+    "static/js/2.cf56cc2f.chunk.js.LICENSE.txt": "/fanfou-suicide/static/js/2.cf56cc2f.chunk.js.LICENSE.txt",
+    "static/media/app.css": "/fanfou-suicide/static/media/Zpix.783bb457.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d6b84207.js",
+    "static/css/2.bc82e399.chunk.css",
+    "static/js/2.cf56cc2f.chunk.js",
+    "static/css/main.6afccd19.chunk.css",
+    "static/js/main.1c10f52a.chunk.js"
+  ]
+}
