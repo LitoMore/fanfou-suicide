@@ -1,13 +1,21 @@
 import React from 'react';
 import queryString from 'query-string';
+import async from 'async';
 import {ff, consumerKey} from './ff';
 import 'nes.css/css/nes.css';
 import './app.css';
 
+const fullList = [];
+let errorPages: [];
+
 class App extends React.Component {
 	state = {
 		loged: false,
-		user: null
+		user: null,
+		fetchDone: false,
+		currentPage: 0
+		// PrevStatusCount: 0,
+		// statusCount: 0
 	}
 
 	async componentDidMount() {
@@ -46,6 +54,50 @@ class App extends React.Component {
 		window.location.replace(`https://fanfou.com/oauth/authorize?oauth_token=${res.oauthToken}&oauth_callback=${window.location.href}`);
 	}
 
+	getErrorPages = () => {
+		return errorPages;
+	}
+
+	fetchHome = () => {
+		const {user, fetchDone} = this.state;
+		if (fetchDone) {
+			return;
+		}
+
+		const {statuses_count: statusesCount} = user;
+		const pageCount = Math.ceil(statusesCount / 60);
+		const pages = Array.from({length: pageCount}, (v, i) => i + 1);
+
+		async.eachLimit(pages, 6, (page, cb) => {
+			ff.get('/statuses/home_timeline', {page, count: 60, mode: 'lite'})
+				.then(list => {
+					// Const prevCount = fullList.length;
+					list.forEach(status => {
+						fullList.push(status);
+					});
+					errorPages = this.getErrorPages().filter(p => p !== page);
+					this.setState(state => ({
+						currentPage: state.currentPage + 1
+						// PrevStatusCount: prevCount,
+						// statusCount: fullList.length
+					}), cb);
+				})
+				.catch(error => {
+					console.error(`Page ${page} errored`, error);
+					errorPages.push(page);
+					cb();
+				});
+		}, error => {
+			if (error) {
+				console.error(error);
+			}
+
+			this.setState({fetchDone: this.getErrorPages().length === 0}, () => {
+				this.fetchHome();
+			});
+		});
+	}
+
 	render() {
 		const {user, loged} = this.state;
 
@@ -60,9 +112,24 @@ class App extends React.Component {
 								你好，<img className="nes-avatar is-small" alt="avatar" src={user.profile_image_url} style={{imageRendering: 'pixelated'}}/> {user.name}。
 							</p>
 
+							<p>你总计有 {user.statuses_count} 条消息。</p>
+
+							<p>
+								<button
+									type="button"
+									className="nes-btn is-error"
+									onClick={() => {
+										document.querySelector('#dialog-dark').showModal();
+									}}
+								>
+									删除所有
+								</button>
+
+							</p>
+
 							<button
 								type="button"
-								className="nes-btn is-error"
+								className="nes-btn is-success"
 								style={{
 									position: 'absolute',
 									right: 0,
@@ -75,7 +142,7 @@ class App extends React.Component {
 									window.location.reload();
 								}}
 							>
-								退出
+								算了
 							</button>
 						</>
 					) : (
@@ -103,6 +170,17 @@ class App extends React.Component {
 						<i className="nes-icon github is-small" style={{marginTop: -4, marginBottom: -4}}/>
 					</a>
 				</p>
+
+				<dialog className="nes-dialog is-dark" id="dialog-dark">
+					<form method="dialog">
+						<p className="title">确认删除你所有的消息吗？</p>
+						<p>一旦选择删除，是不可恢复的!</p>
+						<menu className="dialog-menu" style={{padding: 0, textAlign: 'center', margin: 0}}>
+							<button type="button" className="nes-btn is-success" style={{margin: '0 10px'}}>我后悔了</button>
+							<button type="submit" className="nes-btn is-error" style={{margin: '0 10px'}}>决心自杀</button>
+						</menu>
+					</form>
+				</dialog>
 			</div>
 		);
 	}
