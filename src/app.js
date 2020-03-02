@@ -1,6 +1,6 @@
 import React from 'react';
 import queryString from 'query-string';
-import {ff} from './ff';
+import {ff, consumerKey} from './ff';
 import 'nes.css/css/nes.css';
 import './app.css';
 
@@ -16,19 +16,21 @@ class App extends React.Component {
 			this.setState({loged: true});
 			const parsed = queryString.parse(location.search);
 			const {oauth_token: oauthToken} = parsed;
-			const oauthTokenSecret = localStorage.getItem('requestTokenSecret');
+			const oauthTokenSecret = localStorage.getItem('suicideRequestTokenSecret');
 			if (oauthTokenSecret) {
 				const res = await ff.getAccessToken({oauthToken, oauthTokenSecret});
-				localStorage.setItem('oauthToken', res.oauthToken);
-				localStorage.setItem('oauthTokenSecret', res.oauthTokenSecret);
+				localStorage.setItem('suicideConsumerKey', consumerKey);
+				localStorage.setItem('suicideOauthToken', res.oauthToken);
+				localStorage.setItem('suicideOauthTokenSecret', res.oauthTokenSecret);
 				localStorage.removeItem('requestTokenSecret');
 				window.location.replace(window.location.origin + window.location.pathname);
 			}
 		} else {
-			const oauthToken = localStorage.getItem('oauthToken');
-			const oauthTokenSecret = localStorage.getItem('oauthTokenSecret');
+			const suicdieConsumerKey = localStorage.getItem('suicideConsumerKey');
+			const oauthToken = localStorage.getItem('suicideOauthToken');
+			const oauthTokenSecret = localStorage.getItem('suicideOauthTokenSecret');
 
-			if (oauthToken && oauthTokenSecret) {
+			if (oauthToken && oauthTokenSecret && consumerKey === suicdieConsumerKey) {
 				this.setState({loged: true});
 				ff.oauthToken = oauthToken;
 				ff.oauthTokenSecret = oauthTokenSecret;
@@ -40,7 +42,7 @@ class App extends React.Component {
 
 	goAuth = async () => {
 		const res = await ff.getRequestToken();
-		localStorage.setItem('requestTokenSecret', res.oauthTokenSecret);
+		localStorage.setItem('suicideRequestTokenSecret', res.oauthTokenSecret);
 		window.location.replace(`https://fanfou.com/oauth/authorize?oauth_token=${res.oauthToken}&oauth_callback=${window.location.href}`);
 	}
 
@@ -67,8 +69,9 @@ class App extends React.Component {
 									bottom: 4
 								}}
 								onClick={() => {
-									localStorage.removeItem('oauthToken');
-									localStorage.removeItem('oauthTokenSecret');
+									localStorage.removeItem('suicideConsumerKey');
+									localStorage.removeItem('suicideOauthToken');
+									localStorage.removeItem('suicideOauthTokenSecret');
 									window.location.reload();
 								}}
 							>
